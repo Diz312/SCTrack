@@ -14,17 +14,18 @@ The project will be organized with separate directories for backend, frontend, a
 SCtrack/
 ├── backend/
 │ ├── app.py # Main Flask application file
+│ ├── config_loader.py # Module for loading YAML configuration
 │ ├── config.yaml # YAML configuration file
 │ ├── graph_data.gpickle # Pickle file storing the graph data
-│ ├── data_handler.py # Module for handling pickle data
-│ ├── config_loader.py # Module for loading YAML configuration
-│ └── utils.py # New utility functions module
+│ ├── data_handler.py # Module for managing the content of the pickle file
+│ ├──  utils.py # Other Utilities
 ├── frontend/
-│ ├── Various Files and Directories installed by the create-react-app command
+│ ├── Various Files and Directories installed through React Bootstrap (see Frontend Bootstrap)
 ├── .gitignore
 ├── LICENSE
 ├── Pipfile # Python dependencies that are installed when you run "pipenv install"
-└── README.md # This file
+├── Pipfile.lock # Lock file for the Pipfile
+├── README.md # This file
 
 ## Application Architecture
                           +----------------+
@@ -78,7 +79,7 @@ Use pipenv to install dependencies and create a virtual environment.
 pipenv install
 ``` 
 
-## Frontend Dependencies (if building from scratch)
+## Frontend Bootstrap
 The frontend is built with React and uses npm to manage the dependencies. Below are the steps to bootstrap the project from scratch when I was building it. 
 This, however, should not be necessary if you are using the application ZIP file as all the dependencies should already be in the /frontend directory.
 
@@ -105,72 +106,41 @@ npm install axios
 npm install d3
 ```
 **Install Leaflet**
+The `react-leaflet` and `leaflet` libraries are used to create interactive maps in React applications. `react-leaflet` is a React wrapper for `leaflet`, which is a popular open-source JavaScript library for mobile-friendly interactive maps. To install these libraries, run the following command:
 ```terminal
 npm install react-leaflet leaflet
 ```
 
 ## Application Components
 
-### Backend (Flask)
+### Backend (WIP)
 
 #### app.py
 
-The main Flask app will set up API routes and serve the frontend application. Key parts include:
+This file will serve as the main Flask application. It will set up API routes and serve the frontend application. 
 
+Key parts include:
 - **API Endpoints**:
-
   - `/api/graph`: Fetches the graph data in JSON format for D3 visualization.
   - `/api/config`: Provides filter options and other configurable UI settings based on the YAML configuration.
   - `/api/refresh`: Reloads graph data and filter settings when the user refreshes the graph.
 
-- **CORS Setup**: Flask-CORS will be configured to allow frontend requests.
+#### config_loader.py
+This module loads the **config.yaml** file.
+The application configuration is loaded into a dictionary and returned.
+The plan is to use this to control configurable UI settings and other components to make the  app flexible.
+The **config.yaml** file has to be located in the **same directory as the config_loader.py file (i.e. /backend directory)**.
+The configuration will be accessed dynamically from the frontend via the /api/config endpoint.
 
-Example code for `app.py`:
-
-```python
-from flask import Flask, jsonify
-from flask_cors import CORS
-from data_handler import load_graph_data
-from config_loader import load_config
-
-app = Flask(__name__)
-CORS(app)
-
-@app.route('/api/graph')
-def get_graph_data():
-    data = load_graph_data()
-    return jsonify(data)
-
-@app.route('/api/config')
-def get_config():
-    config = load_config()
-    return jsonify(config)
-
-@app.route('/api/refresh', methods=['POST'])
-def refresh_graph():
-    # Logic to refresh data from pickle file and return updated JSON
-    data = load_graph_data()
-    return jsonify(data)
-
-if __name__ == '__main__':
-    app.run(debug=True)
-```
-
-#### config.yaml
-
-This module loads settings from config.yaml, providing flexible control over filter options, node attributes, and other UI behaviors. The configuration can be accessed dynamically from the frontend via the /api/config endpoint.
-
-Example of a YAML config structure (config.yaml):
-
+##### config.yaml (example)
 ```yaml
 filters:
   - type: node_type
     options: ["Manufacturer", "Warehouse", "Distributor"]
-  - type: region
-    options: ["North America", "Europe", "Asia"]
 display:
   node_size_multiplier: 1.5
   map_zoom_level: 2
+etc..
 ```
 
 #### graph_data.gpickle
@@ -219,116 +189,22 @@ This file stores the graph data in a json format. The attributes of the nodes an
     ]
 }
 ```
-#### config_loader.py
-This module loads the configuration from the YAML file.
-The config.yaml file is loaded into a dictionary and returned.
-It contains the filter options and other configurable UI settings.
-The config.yaml file has to be located in the same directory as the config_loader.py file (i.e. /backend directory).
 
-#### data_handler.py
-
+#### data_handler.py (NOT STARTED)
 This module manages loading and saving graph data in the pickle file format. It will provide functions to unpickle, manipulate, and repickle the data.
 import pickle
 
-```python
-import pickle
+### Frontend (WIP)
+The front end will be a combination of React and D3 components.
 
-def load_graph_data():
-    with open('graph_data.pkl', 'rb') as f:
-        return pickle.load(f)
+#### React Components
+**Header Component:** Displays the header with the logo and the refresh button.
+**WorldMap Component:** Uses **LeafLet and OpenStreetMap** as the background for displaying the supply chain network. The plan is to replace this with **Google Maps** in the future.
 
-def save_graph_data(data):
-    with open('graph_data.pkl', 'wb') as f:
-        pickle.dump(data, f)
-```
 
-### Frontend (React)
-
-#### Core React Components
-
-**Map Component:** Integrates Google Maps as the background.
-**Graph Component:** Renders D3 nodes on the map, adjusting circle size based on the traffic volume.
-**Filter Component:** Displays filter radio buttons dynamically based on config data.
-**Navigation Pane:** Allows future components to be added for extension.
-
-Example of the FilterComponent with dynamic options from /api/config:
-
-```javascript
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-
-function FilterComponent({ onFilterChange }) {
-  const [filters, setFilters] = useState([]);
-
-  useEffect(() => {
-    axios.get("/api/config").then((response) => {
-      setFilters(response.data.filters);
-    });
-  }, []);
-
-  return (
-    <div>
-      {filters.map((filter) => (
-        <div key={filter.type}>
-          <h4>{filter.type}</h4>
-          {filter.options.map((option) => (
-            <label key={option}>
-              <input
-                type="radio"
-                name={filter.type}
-                value={option}
-                onChange={onFilterChange}
-              />
-              {option}
-            </label>
-          ))}
-        </div>
-      ))}
-    </div>
-  );
-}
-
-export default FilterComponent;
-```
-
-#### D3 Graph Visualization
-
-The GraphComponent will render nodes using D3, using geospatial attributes for positioning and adjusting size based on traffic volume.
-An onClick handler will trigger the /api/refresh call when users request an update.
-
-Example use:
-**_Effect hook to render D3 elements:_**
-
-```javascript
-import React, { useEffect } from "react";
-import * as d3 from "d3";
-
-function GraphComponent({ data }) {
-  useEffect(() => {
-    const svg = d3.select("#graph-svg");
-
-    svg
-      .selectAll("circle")
-      .data(data.nodes)
-      .enter()
-      .append("circle")
-      .attr("cx", (d) => d.x) // Geospatial x-position
-      .attr("cy", (d) => d.y) // Geospatial y-position
-      .attr("r", (d) => d.traffic * 1.5) // Size based on traffic volume
-      .attr("fill", "blue");
-  }, [data]);
-
-  return <svg id="graph-svg" width="800" height="600"></svg>;
-}
-
-export default GraphComponent;
-```
-
-#### index.js
-
-The main entry point for the React application, setting up the App component and rendering it to the DOM.
-
-### Testing
+### Testing (NOT STARTED)
+This is the plan for the testing of the application. 
+Testing code has not been developed yet and is part of the future work.
 
 #### Backend Testing (test_backend.py)
 
