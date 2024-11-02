@@ -1,0 +1,4 @@
+# backend/config.yaml
+filters:
+  - type: node_type
+    options: ["Manufacturer", "Warehouse", "Distributor"]
