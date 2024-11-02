@@ -8,20 +8,86 @@ The backend, powered by Flask, serves data to the frontend by retrieving it from
 
 This modular architecture, which incorporates Axios for efficient API communication, ensures scalability, allowing for future functionality to be easily added. Additionally, a left-side navigation pane and a refresh button enhance usability by allowing users to reload data as they explore different configurations and perspectives within the supply chain.
 
+The project will be organized with separate directories for backend, frontend, and configuration files. The structure will look like this:
 
-## Bootstrapping
+## Folder Structure
+SCtrack/
+├── backend/
+│ ├── app.py # Main Flask application file
+│ ├── config.yaml # YAML configuration file
+│ ├── graph_data.gpickle # Pickle file storing the graph data
+│ ├── data_handler.py # Module for handling pickle data
+│ ├── config_loader.py # Module for loading YAML configuration
+│ └── utils.py # New utility functions module
+├── frontend/
+│ ├── Various Files and Directories installed by the create-react-app command
+├── .gitignore
+├── LICENSE
+├── Pipfile # Python dependencies that are installed when you run "pipenv install"
+└── README.md # This file
+
+## Application Architecture
+                          +----------------+
+                          |     User       |
+                          +----------------+
+                                 |
+                                 |
+                             Interacts
+                                 |
+                +----------------v----------------+
+                |            Frontend             |
+                |                                  |
+                |  +---------+      +-----------+ |
+                |  | React   |<---->|    D3     | |
+                |  +---------+      +-----------+ |
+                |        |                |       |
+                |        |    Renders     |       |
+                |        |   Visuals in   |       |
+                |        |    React UI    |       |
+                |     +-------------------------+ |
+                |     |         Axios           | |
+                |     +-------------------------+ |
+                |                   |              |
+                +-------------------|--------------+
+                                    |
+                                    | API Request
+                                    |
+                          +---------v---------+
+                          |      Backend      |
+                          |                   |
+                          |   +-----------+   |
+                          |   |  FlaskAPI  |   |
+                          |   +-----------+   |
+                          |         |         |
+                          |         | Fetches |
+                          +---------|---------+
+                                    |
+                                    |
+                   +----------------v----------------+
+                   |         Data Sources            |
+                   |                                 |
+                   | +-----------+   +-------------+ |
+                   | | GraphData |   | YAML Config | |
+                   | +-----------+   +-------------+ |
+                   +---------------------------------+
+
+## Python Dependencies
 **Virtual Environment**
 Use pipenv to install dependencies and create a virtual environment.
 ```terminal  
 pipenv install
 ``` 
+
+## Frontend Dependencies (if building from scratch)
+The frontend is built with React and uses npm to manage the dependencies. Below are the steps to bootstrap the project from scratch when I was building it. 
+This, however, should not be necessary if you are using the application ZIP file as all the dependencies should already be in the /frontend directory.
+
 **Bootstrap React**
 Go to the frontend directory and create the react app. This will install all the necessary dependencies and create the folder structure for the React app.
 ```terminal  
 cd ../frontend
 npx create-react-app .
 ```
-
 **Update all the dependencies to the latest version**
 ```terminal
 npm install -g npm-check-updates 
@@ -38,26 +104,13 @@ Go to the frontend directory and install axios and d3.
 npm install axios
 npm install d3
 ```
+**Install Leaflet**
+```terminal
+npm install react-leaflet leaflet
+```
 
-## Project Structure
-The project will be organized with separate directories for backend, frontend, and configuration files. The structure will look like this:
+## Application Components
 
-SCtrack/
-├── backend/
-│ ├── app.py # Main Flask application file
-│ ├── config.yaml # YAML configuration file
-│ ├── graph_data.gpickle # Pickle file storing the graph data
-│ ├── data_handler.py # Module for handling pickle data
-│ ├── config_loader.py # Module for loading YAML configuration
-│ └── utils.py # New utility functions module
-├── frontend/
-│ ├── components/ # Directory for React.js components
-│ └── index.js # Main entry point for React application
-├── .gitignore
-├── IMP.md
-├── LICENSE
-├── METHOD.md
-└── README.md
 ### Backend (Flask)
 
 #### app.py
