@@ -8,25 +8,6 @@ The backend, powered by Flask, serves data to the frontend by retrieving it from
 
 This modular architecture, which incorporates Axios for efficient API communication, ensures scalability, allowing for future functionality to be easily added. Additionally, a left-side navigation pane and a refresh button enhance usability by allowing users to reload data as they explore different configurations and perspectives within the supply chain.
 
-The project will be organized with separate directories for backend, frontend, and configuration files. The structure will look like this:
-
-## Folder Structure
-SCtrack/
-├── backend/
-│ ├── app.py # Main Flask application file
-│ ├── config_loader.py # Module for loading YAML configuration
-│ ├── config.yaml # YAML configuration file
-│ ├── graph_data.gpickle # Pickle file storing the graph data
-│ ├── data_handler.py # Module for managing the content of the pickle file
-│ ├──  utils.py # Other Utilities
-├── frontend/
-│ ├── Various Files and Directories installed through React Bootstrap (see Frontend Bootstrap)
-├── .gitignore
-├── LICENSE
-├── Pipfile # Python dependencies that are installed when you run "pipenv install"
-├── Pipfile.lock # Lock file for the Pipfile
-├── README.md # This file
-
 ## Application Architecture
                           +----------------+
                           |     User       |
@@ -72,36 +53,68 @@ SCtrack/
                    | +-----------+   +-------------+ |
                    +---------------------------------+
 
-## Creating the Python environment
-**Virtual Environment**
-Use pipenv to install dependencies and create a virtual environment.
+## Setting Up the RunTime Environment
+**Use `pipenv` to set up a Virtual Python Environment**
+
 Open 'terminal' and run the following command:
 ```terminal  
 pipenv install
 ``` 
-Then (assuming VS Code) open the command palette and run the following command:
-```terminal
+**Select the Python Interpreter**
+
+(Assuming VS Code) open the command palette and run the following command:
+```
 Python: Select Interpreter
 ```
-Select the interpreter that matches the Python version in the Pipfile and the name of the folder in the root directory (i.e. SCtrack).
+Select the interpreter that matches the Python version in the Pipfile and the name of the folder in the root directory (i.e. SCtrack)
+
+**Setting up REACT**
+
+First make sure Node.js and npm are installed
+```
+For Mac (without Homebrew):
+Visit Node.js official website
+Download and install the LTS version for macOS
+```
+
+After installation, verify that both Node.js and npm are installed:
+```terminal
+   node --version
+   npm --version
+```
+
+Once this is done go to the `./frontend` directory and run the following terminal command:
+```terminal
+npm install
+```
+
+At this point you should be able to run the following command to start the REACT application:
+```terminal
+npm start
+```
+This will start the REACT application. 
+See the **Frontend Bootstrap** section below for more information on how the REACT application was created.
 
 ## Frontend Bootstrap
 The frontend is built with React and uses npm to manage the dependencies. Below are the steps to bootstrap the project from scratch when I was building it. 
 This, however, should not be necessary if you are using the application ZIP file as all the dependencies should already be in the /frontend directory.
 
 **Bootstrap React**
+
 Go to the frontend directory and create the react app. This will install all the necessary dependencies and create the folder structure for the React app.
 ```terminal  
 cd ../frontend
 npx create-react-app .
 ```
 **Update all the dependencies to the latest version**
+
 ```terminal
 npm install -g npm-check-updates 
 npm-check-updates -u 
 npm install
 ```
 **Install AXIOS and D3**
+
 Axios is a popular JavaScript library used to make HTTP requests from a browser or Node.js. It’s particularly favored in frontend applications for its simplicity, powerful features, and support for modern JavaScript like async/await. 
 
 D3 is a JavaScript library for building data visualizations based on prebuilt components. React and D3 can be used together to create a powerful and flexible data visualization application.
@@ -112,6 +125,7 @@ npm install axios
 npm install d3
 ```
 **Install Leaflet**
+
 The `react-leaflet` and `leaflet` libraries are used to create interactive maps in React applications. `react-leaflet` is a React wrapper for `leaflet`, which is a popular open-source JavaScript library for mobile-friendly interactive maps. To install these libraries, run the following command:
 ```terminal
 npm install react-leaflet leaflet
