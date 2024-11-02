@@ -288,3 +288,13 @@ For end-to-end testing, Cypress can be used to simulate user interactions with t
 **Error Handling:** Tests to check how the application handles failed API requests or invalid configurations.
 
 Example Command: To run Cypress tests, execute:
+
+## Bootstrapping REACT
+Go to the frontend directory and create the react app. This will install all the necessary dependencies and create the folder structure for the React app.
+```terminal  
+cd ../frontend
+npx create-react-app .
+```
+
+
+
