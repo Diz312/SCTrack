@@ -72,12 +72,18 @@ SCtrack/
                    | +-----------+   +-------------+ |
                    +---------------------------------+
 
-## Python Dependencies
+## Creating the Python environment
 **Virtual Environment**
 Use pipenv to install dependencies and create a virtual environment.
+Open 'terminal' and run the following command:
 ```terminal  
 pipenv install
 ``` 
+Then (assuming VS Code) open the command palette and run the following command:
+```terminal
+Python: Select Interpreter
+```
+Select the interpreter that matches the Python version in the Pipfile and the name of the folder in the root directory (i.e. SCtrack).
 
 ## Frontend Bootstrap
 The frontend is built with React and uses npm to manage the dependencies. Below are the steps to bootstrap the project from scratch when I was building it. 
