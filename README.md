@@ -96,8 +96,7 @@ This will start the REACT application.
 See the **Frontend Bootstrap** section below for more information on how the REACT application was created.
 
 ## Frontend Bootstrap
-The frontend is built with React and uses npm to manage the dependencies. Below are the steps to bootstrap the project from scratch when I was building it. 
-This, however, should not be necessary if you are using the application ZIP file as all the dependencies should already be in the /frontend directory.
+The frontend is built with React and uses npm to manage the dependencies. Below are the steps to bootstrap the project from scratch when I was building it. This, however, should not be necessary if you are using the application ZIP file as all the dependencies should already be in the /frontend directory.
 
 **Bootstrap React**
 
