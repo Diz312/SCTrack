@@ -18,30 +18,28 @@ This modular architecture, which incorporates Axios for efficient API communicat
                                  |
                 +----------------v----------------+
                 |            Frontend             |
-                |                                  |
+                |    Renders Visuals in React UI  |
                 |  +---------+      +-----------+ |
                 |  | React   |<---->|    D3     | |
                 |  +---------+      +-----------+ |
                 |        |                |       |
-                |        |    Renders     |       |
-                |        |   Visuals in   |       |
-                |        |    React UI    |       |
+                |        |                |       |
+                |        |                |       |
                 |     +-------------------------+ |
                 |     |         Axios           | |
                 |     +-------------------------+ |
-                |                   |              |
-                +-------------------|--------------+
+                |                   |             |
+                +-------------------|-------------+
                                     |
                                     | API Request
                                     |
                           +---------v---------+
                           |      Backend      |
-                          |                   |
+                          |    Fetches Data   |
                           |   +-----------+   |
-                          |   |  FlaskAPI  |   |
+                          |   |  FlaskAPI |   |
                           |   +-----------+   |
                           |         |         |
-                          |         | Fetches |
                           +---------|---------+
                                     |
                                     |
@@ -57,7 +55,8 @@ This modular architecture, which incorporates Axios for efficient API communicat
 **Use `pipenv` to set up a Virtual Python Environment**
 
 Open 'terminal' and run the following command:
-```terminal  
+```terminal  \
+pip install pipenv (if not already installed)
 pipenv install
 ``` 
 **Select the Python Interpreter**
