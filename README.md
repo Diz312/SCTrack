@@ -122,11 +122,9 @@ Go to the frontend directory and install axios and d3.
 npm install axios
 npm install d3
 ```
-**Install Leaflet**
-
-The `react-leaflet` and `leaflet` libraries are used to create interactive maps in React applications. `react-leaflet` is a React wrapper for `leaflet`, which is a popular open-source JavaScript library for mobile-friendly interactive maps. To install these libraries, run the following command:
+**Install Google Maps API**
 ```terminal
-npm install react-leaflet leaflet
+npm install @react-google-maps/api
 ```
 
 ## Application Components

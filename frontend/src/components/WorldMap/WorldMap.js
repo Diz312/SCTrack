@@ -1,62 +1,40 @@
 // src/components/WorldMap.js
 
-import React from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
-import { icon } from 'leaflet';
-import { Polyline } from 'react-leaflet';
-const WorldMap = ({ graphData }) => {
-  return (
-    <MapContainer
-      center={[41.8781, -87.6298]}  // Centered on Chicago
-      zoom={12}  // Zoom to 10 mile radius
-      style={{ height: "800px", width: "100%" }}
-    >
-      <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      />
-      {graphData.nodes.map((node, index) => (
-        <Marker 
-          key={index} 
-          position={node.location} 
-          icon={icon({
-            iconUrl: require(`./${node.logo}`),
-            iconSize: [50, 50], // Size of the marker (scaled up)
-            iconAnchor: [25, 50], // Anchor point of the marker (scaled up)
-            popupAnchor: [0, -50], // Popup position (scaled up)
-            className: 'leaflet-zoom-hide' // Prevent marker size from changing with zoom
-          })}
-        >
-          <Popup>
-            <strong>{node.name}</strong><br />
-            {node.address}
-          </Popup>
-        </Marker>
-      ))}
-      {graphData.edges.map((edge, index) => {
-        const sourceNode = graphData.nodes.find(node => node.name === edge.source);
-        const targetNode = graphData.nodes.find(node => node.name === edge.target);
-        if (sourceNode && targetNode) {
-          let color = "blue"; // Default color
-          if (sourceNode.type === "ACCN" || targetNode.type === "ACCN") {
-            color = "purple"; // Color for Accenture nodes
-          }
-          if (sourceNode.type === "MHQ" || targetNode.type === "MHQ") {
-            color = "red"; // Color for MHQ nodes
-          }
-          return (
-            <Polyline
-              key={index}
-              positions={[sourceNode.location, targetNode.location]}
-              color={color}
-            />
-          );
-        }
-        return null;
-      })}
-    </MapContainer>
-  );
+import React, { useEffect, useRef } from 'react';
+
+const WorldMap = ({ graphData, configData }) => {
+  const mapRef = useRef(null);
+
+  useEffect(() => {
+    const loadGoogleMapsScript = () => {
+      const script = document.createElement('script');
+      script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyCSRat9HWD3uvuhs9AMA5m0bpfR7lV2Y0k`;
+      script.async = true;
+      script.defer = true;
+      script.onload = initMap;
+      document.head.appendChild(script);
+    };
+
+    const initMap = () => {
+      const map = new window.google.maps.Map(mapRef.current, {
+        center: { lat: 41.8781, lng: -87.6298 },
+        zoom: 12,
+      });
+
+      new window.google.maps.Marker({
+        position: { lat: 41.88872904554145, lng: -87.65304094650439 },
+        map: map,
+      });
+    };
+
+    if (!window.google) {
+      loadGoogleMapsScript();
+    } else {
+      initMap();
+    }
+  }, []);
+
+  return <div ref={mapRef} style={{ height: '700px', width: '100%' }} />;
 };
 
 export default WorldMap;
