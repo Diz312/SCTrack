@@ -19,7 +19,7 @@ const WorldMap = () => {
     <APIProvider apiKey="AIzaSyCSRat9HWD3uvuhs9AMA5m0bpfR7lV2Y0k">
       <div style={mapContainerStyle}>
         <Map
-          defaultCenter={initialCenter} // Set initial center without controlling it afterward
+          defaultCenter={initialCenter}
           zoom={zoom}
           onZoomChanged={(newZoom) => setZoom(newZoom)}
           options={{
@@ -37,16 +37,15 @@ const WorldMap = () => {
           <Marker
             position={markerPosition}
             onClick={() => setInfoWindowOpen(true)}
-          >
-            {infoWindowOpen && (
-              <InfoWindow
-                position={markerPosition}
-                onCloseClick={() => setInfoWindowOpen(false)}
-              >
-                <div>MHQ</div>
-              </InfoWindow>
-            )}
-          </Marker>
+          />
+          {infoWindowOpen && (
+            <InfoWindow
+              position={markerPosition}
+              onCloseClick={() => setInfoWindowOpen(false)}
+            >
+              <div>MHQ</div>
+            </InfoWindow>
+          )}
         </Map>
       </div>
     </APIProvider>
