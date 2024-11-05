@@ -1,40 +1,56 @@
 // src/components/WorldMap.js
 
-import React, { useEffect, useRef } from 'react';
+import React, { useState } from 'react';
+import { APIProvider, Map, Marker, InfoWindow } from '@vis.gl/react-google-maps';
 
-const WorldMap = ({ graphData, configData }) => {
-  const mapRef = useRef(null);
+const mapContainerStyle = {
+  height: '700px',
+  width: '100%',
+};
 
-  useEffect(() => {
-    const loadGoogleMapsScript = () => {
-      const script = document.createElement('script');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyCSRat9HWD3uvuhs9AMA5m0bpfR7lV2Y0k`;
-      script.async = true;
-      script.defer = true;
-      script.onload = initMap;
-      document.head.appendChild(script);
-    };
+const initialCenter = { lat: 41.8781, lng: -87.6298 };
+const markerPosition = { lat: 41.88872904554145, lng: -87.65304094650439 };
 
-    const initMap = () => {
-      const map = new window.google.maps.Map(mapRef.current, {
-        center: { lat: 41.8781, lng: -87.6298 },
-        zoom: 12,
-      });
+const WorldMap = () => {
+  const [infoWindowOpen, setInfoWindowOpen] = useState(false);
+  const [zoom, setZoom] = useState(10);
 
-      new window.google.maps.Marker({
-        position: { lat: 41.88872904554145, lng: -87.65304094650439 },
-        map: map,
-      });
-    };
-
-    if (!window.google) {
-      loadGoogleMapsScript();
-    } else {
-      initMap();
-    }
-  }, []);
-
-  return <div ref={mapRef} style={{ height: '700px', width: '100%' }} />;
+  return (
+    <APIProvider apiKey="AIzaSyCSRat9HWD3uvuhs9AMA5m0bpfR7lV2Y0k">
+      <div style={mapContainerStyle}>
+        <Map
+          defaultCenter={initialCenter} // Set initial center without controlling it afterward
+          zoom={zoom}
+          onZoomChanged={(newZoom) => setZoom(newZoom)}
+          options={{
+            zoomControl: true,
+            draggable: true,
+            scrollwheel: true,
+            disableDoubleClickZoom: false,
+            fullscreenControl: true,
+            mapTypeControl: true,
+            streetViewControl: true,
+            gestureHandling: 'greedy',
+          }}
+          style={{ height: '100%', width: '100%' }}
+        >
+          <Marker
+            position={markerPosition}
+            onClick={() => setInfoWindowOpen(true)}
+          >
+            {infoWindowOpen && (
+              <InfoWindow
+                position={markerPosition}
+                onCloseClick={() => setInfoWindowOpen(false)}
+              >
+                <div>MHQ</div>
+              </InfoWindow>
+            )}
+          </Marker>
+        </Map>
+      </div>
+    </APIProvider>
+  );
 };
 
 export default WorldMap;

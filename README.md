@@ -51,7 +51,8 @@ This modular architecture, which incorporates Axios for efficient API communicat
                    | +-----------+   +-------------+ |
                    +---------------------------------+
 
-## Setting Up the RunTime Environment
+## Environment Setup
+### Python (for backend)
 **Use `pipenv` to set up a Virtual Python Environment**
 
 Open 'terminal' and run the following command:
@@ -59,7 +60,7 @@ Open 'terminal' and run the following command:
 pip install pipenv (if not already installed)
 pipenv install
 ``` 
-**Select the Python Interpreter**
+**Select the Python Interpreter in IDE**
 
 (Assuming VS Code) open the command palette and run the following command:
 ```
@@ -67,9 +68,12 @@ Python: Select Interpreter
 ```
 Select the interpreter that matches the Python version in the Pipfile and the name of the folder in the root directory (i.e. SCtrack)
 
-**Setting up REACT**
+### React (for frontend)
+**Note**: Below steps assume the REACT application is already bootstrapped. If it is, the necessary folder structure and bootstrap .JS and HTML files should already be in the /frontend directory appropriately. If not, see the ***Frontend Bootstrap*** section below.
 
-First make sure Node.js and npm are installed
+Assuming the REACT application is already bootstrapped, the following steps are needed to install all the necessary dependencies for the REACT application in the /frontend/node_modules directory since this directory is included in the .gitignore and the node_modules directory is not committed to the repository.This folder carries all the dependencies for the REACT application and is necessary for the application to run.
+
+First make sure Node.js and npm are installed on the machine
 ```
 For Mac (without Homebrew):
 Visit Node.js official website
@@ -85,32 +89,9 @@ After installation, verify that both Node.js and npm are installed:
 Once this is done go to the `./frontend` directory and run the following terminal command:
 ```terminal
 npm install
-```
-
-At this point you should be able to run the following command to start the REACT application:
-```terminal
-npm start
-```
-This will start the REACT application. 
-See the **Frontend Bootstrap** section below for more information on how the REACT application was created.
-
-## Frontend Bootstrap
-The frontend is built with React and uses npm to manage the dependencies. Below are the steps to bootstrap the project from scratch when I was building it. This, however, should not be necessary if you are using the application ZIP file as all the dependencies should already be in the /frontend directory.
-
-**Bootstrap React**
-
-Go to the frontend directory and create the react app. This will install all the necessary dependencies and create the folder structure for the React app.
-```terminal  
-cd ../frontend
-npx create-react-app .
-```
-**Update all the dependencies to the latest version**
-
-```terminal
-npm install -g npm-check-updates 
 npm-check-updates -u 
-npm install
 ```
+
 **Install AXIOS and D3**
 
 Axios is a popular JavaScript library used to make HTTP requests from a browser or Node.js. It’s particularly favored in frontend applications for its simplicity, powerful features, and support for modern JavaScript like async/await. 
@@ -122,10 +103,23 @@ Go to the frontend directory and install axios and d3.
 npm install axios
 npm install d3
 ```
-**Install Google Maps API**
+At this point you should be able to run the following command to start the REACT application:
 ```terminal
-npm install @react-google-maps/api
+npm start
 ```
+This will start the REACT application. 
+
+### Frontend Initial Bootstrap
+The frontend is built with React and uses npm to manage the dependencies. Below are the steps to bootstrap the project from scratch. This, however, should not be necessary if the application is pulled from the repository as the folder structures should already be in the /frontend directory. 
+
+**Bootstrap React**
+
+Go to the frontend directory and create the react app. This will install all the necessary dependencies and create the folder structure for the React app.
+```terminal  
+cd ../frontend
+npx create-react-app .
+```
+
 
 ## Application Components
 
