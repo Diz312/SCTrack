@@ -109,6 +109,17 @@ npm start
 ```
 This will start the REACT application. 
 
+**Install Google Maps and Mapbox Libraries**
+
+For Google Maps visualization using @vis.gl/react-google-maps: 
+```terminal
+npm install @vis.gl/react-google-maps
+```
+For Mapbox visualization using react-map-gl: 
+```terminal
+npm install mapbox-gl
+```
+
 ### Frontend Initial Bootstrap
 The frontend is built with React and uses npm to manage the dependencies. Below are the steps to bootstrap the project from scratch. This, however, should not be necessary if the application is pulled from the repository as the folder structures should already be in the /frontend directory. 
 

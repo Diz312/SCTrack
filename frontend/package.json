@@ -9,6 +9,7 @@
     "@vis.gl/react-google-maps": "^1.4.0",
     "axios": "^1.7.7",
     "d3": "^7.9.0",
+    "mapbox-gl": "^3.7.0",
     "npm-check-updates": "^17.1.9",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
