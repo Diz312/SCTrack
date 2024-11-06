@@ -16,7 +16,7 @@ const WorldMap = () => {
   const [zoom, setZoom] = useState(10);
 
   return (
-    <APIProvider apiKey="AIzaSyCSRat9HWD3uvuhs9AMA5m0bpfR7lV2Y0k">
+    <APIProvider apiKey=""> 
       <div style={mapContainerStyle}>
         <Map
           defaultCenter={initialCenter}
