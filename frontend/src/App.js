@@ -1,17 +1,31 @@
-// // src/App.js
+import { useRef, useEffect } from 'react'
+import mapboxgl from 'mapbox-gl'
 
-import React from 'react';
-import './App.css';
-import Header from './components/Header/Header'; // Import Header component
-import WorldMap from './components/WorldMap/WorldMap'; // Import WorldMap component
+import 'mapbox-gl/dist/mapbox-gl.css';
+
+import './App.css'
 
 function App() {
+
+  const mapRef = useRef()
+  const mapContainerRef = useRef()
+
+  useEffect(() => {
+    mapboxgl.accessToken = 'pk.eyJ1IjoiZGl6MzEyIiwiYSI6ImNtMzRvYTJraTAwZ28ycnB2ZmJpYWhoOHAifQ.76sBUjcSBy9nOGxB6i45_w'
+    mapRef.current = new mapboxgl.Map({
+      container: mapContainerRef.current,
+    });
+
+    return () => {
+      mapRef.current.remove()
+    }
+  }, [])
+
   return (
-    <div className="App">
-      <Header /> {/* Render Header component */}
-      <WorldMap /> {/* Render WorldMap component */}
-    </div>
-  );
+    <>
+      <div id='map-container' ref={mapContainerRef}/>
+    </>
+  )
 }
 
-export default App;
+export default App
