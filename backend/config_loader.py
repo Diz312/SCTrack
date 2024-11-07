@@ -16,15 +16,11 @@ def load_config():
         #config = yaml.safe_load(file)
         config = {}
 
-        # Add GOOGLE_MAPS_API_KEY to the config
+        # Add MAPBOX_ACCESS_TOKEN to the config
         load_dotenv()
-        google_maps_api_key = os.getenv("GOOGLE_MAPS_API_KEY")
+        mapbox_access_token = os.getenv("MAPBOX_ACCESS_TOKEN")
+        config["MAPBOX_ACCESS_TOKEN"] = mapbox_access_token
        
-        if google_maps_api_key:
-            config["GOOGLE_MAPS_API_KEY"] = google_maps_api_key
-        else:
-            logging.warning("GOOGLE_MAPS_API_KEY not found in .env file or .env was not loaded properly.")
-            
     logging.debug(f"Config content: {config}")
     return config
 
