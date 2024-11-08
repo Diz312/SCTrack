@@ -49,12 +49,13 @@ function WorldMapBox() {
     };
   }, [MAPBOX_ACCESS_TOKEN]); // Only depend on MAPBOX_ACCESS_TOKEN
 
-  useEffect(() => { // When user pans the map, update center and zoom so it can be used in the sidebar
+  useEffect(() => { // When user pans the map, update center and zoom info so it can be used in the sidebar
     if (!mapRef.current) return;
 
     const handleMove = () => {
       const mapCenter = mapRef.current.getCenter();
       const mapZoom = mapRef.current.getZoom();
+      // console.log('Map moved:', mapCenter, mapZoom); // Debugging: log the new center and zoom
       setCenter([mapCenter.lng, mapCenter.lat]);
       setZoom(mapZoom);
     };
@@ -64,8 +65,8 @@ function WorldMapBox() {
     return () => {
       mapRef.current.off('move', handleMove);
     };
-  }, []); // Empty dependency array to ensure this effect runs only once
-
+  }, [mapRef]); // Correct dependency to mapRef
+  
   return (
     <>
       <div className="sidebar">
