@@ -6,11 +6,11 @@ import logo from './Header_logo.png';  // Add the logo file here
 
 const Header = () => {
   return (
-    <header className="header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
-      <img src={logo} alt="Supply Chain Tracker Logo" className="logo" style={{ marginRight: '10px' }} />
-      <h1 className="title" style={{ margin: 0 }}>Supply Chain Tracker</h1>
-    </header>
+    <div className="header">
+      <img src={logo} alt="Supply Chain Tracker Logo" className="logo" />
+      <div className="title">Supply Chain Tracker</div>
+    </div>
   );
 };
 
-export default Header; 
+export default Header;

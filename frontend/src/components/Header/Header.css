@@ -2,21 +2,26 @@
 
 .header {
   display: flex;
-  height: 100px;
   align-items: center;
-  justify-content: center;
-  padding: 1rem;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 100px;
+  height: 100px;
   background-color: #333;
-  color: #fff;
 }
 
 .logo {
   width: 100px;
   height: 100px;
-  margin-right: 1rem;
 }
 
 .title {
   font-size: 1.5rem;
   font-weight: bold;
+  color: white;
+  background-color: transparent;
+  margin-left: 10px;
+  width: 200px;
+  white-space: nowrap;
 }
