@@ -1,27 +1,27 @@
 #map-container {
-    height: calc(100vh - 100px); /* Ensure this matches the header height */
+    height: 100%; /* Ensure this matches the header height */
     width: 100%;
     background-color: rgb(148, 108, 108); /* Temporary for debugging */
 }
 
 .sidebar {
-    background-color: rgba(62, 65, 67, 0.515);
+    background-color: rgb(62, 65, 67);
     color: #fbfafa;
-    padding: 6px 12px;
+    padding: 5px 10px;
     font-family: monospace;
-    z-index: 10; /* Increase z-index to ensure visibility */
+    z-index: 10; /* Ensure it is above other elements */
     position: absolute;
-    top: 0;
-    right: 0;
-    margin: 12px;
+    bottom: 0; /* Move to the bottom */
+    right: 0; /* Move to the right */
+    margin: 0;
     border-radius: 4px;
 }
 
 .reset-button {
     position: absolute;
-    top: 50px;
+    right: 400px; /* Adjusted to position relative to the sidebar */
+    bottom: 0; /* Added to ensure it's not at the very bottom */
     z-index: 10; /* Ensure it is above other elements */
-    left: 12px;
     padding: 4px 10px;
     border-radius: 10px;
     cursor: pointer;
